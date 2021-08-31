@@ -54,6 +54,7 @@ stages{
                          }
                      failure {
                               echo ' Deployment failed.' }
+                        }
                    
                 }
             }
