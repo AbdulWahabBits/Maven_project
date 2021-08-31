@@ -59,6 +59,7 @@ stages{
                                              bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                                           }
                               }
+                              }
                         }
                    
                 }
