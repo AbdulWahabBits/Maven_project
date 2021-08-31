@@ -1,5 +1,8 @@
 
 pipeline {
+    node {
+    def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
+    def mvnHome =  tool name: 'MyMaven', type: 'maven'  
     agent any
 
     parameters {
@@ -10,9 +13,7 @@ pipeline {
     /*triggers {
          pollSCM('* * * * *')
      } */
-node {
-    def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
-    def mvnHome =  tool name: 'MyMaven', type: 'maven'  }
+
   
 stages{
         stage('Build'){
@@ -52,4 +53,5 @@ stages{
          sleep(time:100,unit:"SECONDS")
    }*/
     }
+}
 }
