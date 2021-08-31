@@ -56,5 +56,22 @@ stages{
          bat "${tomcatBin}\\startup.bat"
          sleep(time:100,unit:"SECONDS")
    }*/
+   post {
+                success {
+                    echo 'Code deployed to Production.'
+                }
+
+                failure {
+                    echo ' Deployment failed.'
+                stage ("Deploy to Production"){
+                    steps {
+                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
+                    }
+                }
+            }
+        }
+   
+   
+   //end Brackets
     }
 }
