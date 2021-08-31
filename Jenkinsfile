@@ -1,6 +1,6 @@
 
 pipeline {
-    node {
+   
     def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
     def mvnHome =  tool name: 'MyMaven', type: 'maven'  
     agent any
@@ -53,5 +53,4 @@ stages{
          sleep(time:100,unit:"SECONDS")
    }*/
     }
-}
 }
