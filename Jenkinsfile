@@ -53,7 +53,12 @@ stages{
                            echo 'Code deployed to Production.'
                          }
                      failure {
-                              echo ' Deployment failed.' }
+                              echo ' Deployment failed.'
+                              stage ("Deploy back to Production"){
+                                    steps {
+                                             bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
+                                          }
+                              }
                         }
                    
                 }
