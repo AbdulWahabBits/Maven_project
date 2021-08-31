@@ -1,7 +1,7 @@
 
 pipeline {
    
-    def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
+    //def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
     //def mvnHome =  tool name: 'MyMaven', type: 'maven'  
     agent any
 
@@ -18,8 +18,8 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                
-                'mvn clean package'
+                bat label: '', script: 'mvn clean package'
+                echo "test successful";
                 
             }
             post {
