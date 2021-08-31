@@ -1,4 +1,5 @@
 def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
+def mvnHome =  tool name: 'MyMaven', type: 'maven'  
 pipeline {
     agent any
 
@@ -15,7 +16,7 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                def mvnHome =  tool name: 'MyMaven', type: 'maven'   
+                
                 bat "${mvnHome}/bin/mvn clean package"
                 
             }
