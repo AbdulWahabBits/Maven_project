@@ -1,3 +1,4 @@
+def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
 pipeline {
     agent any
 
@@ -6,10 +7,10 @@ pipeline {
          string(name: 'tomcat_prod', defaultValue: 'localhost', description: 'Production Server')
     }
 
-    triggers {
+    /*triggers {
          pollSCM('* * * * *')
-     }
-def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
+     } */
+
   
 stages{
         stage('Build'){
