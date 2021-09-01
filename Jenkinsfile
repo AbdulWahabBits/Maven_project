@@ -42,7 +42,7 @@ stages{
                     }
                 } */
 
-               node('Prod'){
+               
                 stage ("Deploy to Production"){
                    steps {
                        //timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
@@ -61,7 +61,7 @@ stages{
                         } //post
                    
                                 }
-               } //node
+              
             }
         }
   /*stage ('Start Tomcat Server') {
