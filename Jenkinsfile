@@ -16,7 +16,8 @@ pipeline {
 tools {
     maven 'MyMaven'
   }
-  
+   
+   node('Prod') {
 stages{
         stage('Build'){
             steps {
@@ -71,4 +72,5 @@ stages{
    
    //end Brackets
     }
+}
 }
