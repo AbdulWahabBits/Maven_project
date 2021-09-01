@@ -58,7 +58,7 @@ stages{
                     steps {
 			    unstash 'file'
 			bat label: '', script: 'mvn clean package'
-                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\dev.war\""
+                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                     }
                 } 
 
