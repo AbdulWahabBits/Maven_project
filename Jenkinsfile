@@ -1,7 +1,7 @@
 
 pipeline {
    
-     //agent any
+     agent any
    
 
     parameters {
@@ -36,16 +36,16 @@ stages{
 		     agent {label 'Dev'}
 		     Steps {
 			    bat label: '', script: 'mvn test'
-                echo "test successful";
+                            echo "test successful";
 			 }
-			 post {
+			 /*post {
 			 success{
 			  echo 'Now will deploy...'
 			 }
 			 failure{
 			 echo 'test failed...'
 			 }
-			 }
+			 }*/
 			 }
 
         stage ('Deployments'){
