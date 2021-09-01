@@ -17,12 +17,12 @@ tools {
 
 stages{
         stage('Build'){
-		    
+		  agent {label 'Master'}  
             steps {
-		    node('Prod' 'Dev') {
+		    
                 bat label: '', script: 'mvn clean package'
                 echo "Build successful";
-		    }
+		    
             }
             post {
                 success {
