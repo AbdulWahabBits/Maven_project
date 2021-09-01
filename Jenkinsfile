@@ -1,7 +1,7 @@
 
 pipeline {
    
-   //  agent any
+   agent {label 'Prod && Dev'}
    
 
     parameters {
@@ -17,7 +17,7 @@ tools {
 
 stages{
         stage('Build'){
-		      agent any
+		      agent {label 'Prod && Dev'}
             steps {
                 bat label: '', script: 'mvn clean package'
                 echo "Build successful";
