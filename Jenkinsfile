@@ -38,14 +38,14 @@ stages{
 			    bat label: '', script: 'mvn test'
                             echo "test successful";
 			 }
-			 /*post {
+			 post {
 			 success{
 			  echo 'Now will deploy...'
 			 }
 			 failure{
 			 echo 'test failed...'
 			 }
-			 }*/
+			 }
 			 }
 
         stage ('Deployments'){
@@ -53,6 +53,7 @@ stages{
                 stage ('Deploy to Development'){
 				agent {label 'Dev'}
                     steps {
+			bat label: '', script: 'mvn clean package'
                         bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\dev.war\""
                     }
                 } 
@@ -61,11 +62,11 @@ stages{
                 stage ("Deploy to Production"){
 				agent {label 'Prod'}
                     steps {
-                       //timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
+                       timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
                         //sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                     }
-                   // }
+                   }
                     post {
                       success {
                            echo 'Code deployed to Production.'
