@@ -34,7 +34,7 @@ stages{
 		
 		stage('Test') {
 		     agent {label 'Dev'}
-		     Steps {
+		     steps {
 			    bat label: '', script: 'mvn test'
                             echo "test successful";
 			 }
