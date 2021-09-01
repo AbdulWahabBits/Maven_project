@@ -19,9 +19,10 @@ stages{
         stage('Build'){
 		    
             steps {
+		    node('Prod','Dev') {
                 bat label: '', script: 'mvn clean package'
                 echo "Build successful";
-                
+		    }
             }
             post {
                 success {
