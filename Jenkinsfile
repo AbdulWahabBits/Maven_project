@@ -22,13 +22,14 @@ stages{
 		    
                 bat label: '', script: 'mvn clean package'
                 echo "Build successful";
-		    
+		stash 'source'    
             }
             post {
                 success {
                     echo 'Now Archiving...'
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
+		 stash 'file'
                 }
             }
         }
@@ -36,6 +37,7 @@ stages{
 		stage('Test') {
 		     agent {label 'Dev'}
 		     steps {
+			     unstash 'source'
 			    bat label: '', script: 'mvn test'
                             echo "test successful";
 			 }
@@ -54,6 +56,7 @@ stages{
                 stage ('Deploy to Development'){
 				agent {label 'Dev'}
                     steps {
+			    unstash 'file'
 			bat label: '', script: 'mvn clean package'
                         bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\dev.war\""
                     }
@@ -65,6 +68,7 @@ stages{
                     steps {
                        timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
                         //sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+		      unstash 'file'
                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                     }
                    }
