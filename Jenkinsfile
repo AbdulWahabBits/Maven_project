@@ -1,19 +1,15 @@
 
 pipeline {
    
-    //def tomcatWeb = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
-    //def mvnHome =  tool name: 'MyMaven', type: 'maven'  
-    //agent any
-   agent { label 'Prod' }
+     //agent any
+   
 
     parameters {
          // string(name: 'tomcat_dev', defaultValue: '35.166.210.154', description: 'Staging Server')
          string(name: 'tomcat_prod', defaultValue: 'localhost', description: 'Production Server')
     }
 
-    /*triggers {
-         pollSCM('* * * * *')
-     } */
+    
 tools {
     maven 'MyMaven'
   }
@@ -21,9 +17,10 @@ tools {
 
 stages{
         stage('Build'){
+		      agent any
             steps {
                 bat label: '', script: 'mvn clean package'
-                echo "test successful";
+                echo "Build successful";
                 
             }
             post {
@@ -34,17 +31,35 @@ stages{
                 }
             }
         }
+		
+		stage('Test') {
+		     agent {label 'Dev'}
+		     Steps {
+			    bat label: '', script: 'mvn test'
+                echo "test successful";
+			 }
+			 post {
+			 success{
+			  echo 'Now will deploy...'
+			 }
+			 failure{
+			 echo 'test failed...'
+			 }
+			 }
+			 }
 
         stage ('Deployments'){
             parallel{
-           /*     stage ('Deploy to Staging'){
+                stage ('Deploy to Development'){
+				agent {label 'Dev'}
                     steps {
-                       removed
+                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\dev.war\""
                     }
-                } */
+                } 
 
                
                 stage ("Deploy to Production"){
+				agent {label 'Prod'}
                     steps {
                        //timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
                         //sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
@@ -76,4 +91,3 @@ stages{
    //end Brackets
     }
 }
-
