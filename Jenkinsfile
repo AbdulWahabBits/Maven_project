@@ -37,8 +37,7 @@ stages{
                 script{
                      skipRemainingStages = true
                      //or
-                     error "Failed, exiting now..."
-			println "skipRemainingStages = ${skipRemainingStages}"
+                    println "skipRemainingStages = ${skipRemainingStages}"
                     }
              }
             }
