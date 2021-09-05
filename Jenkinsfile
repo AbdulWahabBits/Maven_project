@@ -56,7 +56,7 @@ stages{
             post {
                 success {
 		     echo "Build successful";
-		    mail to:"2021ht66017@wilp.bits-pilani.ac.in", subject: 'The Build is successful'
+		    mail (to:"2021ht66017@wilp.bits-pilani.ac.in", subject: 'The Build is successful')
                     echo 'Now Archiving...'
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
