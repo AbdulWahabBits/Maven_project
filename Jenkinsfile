@@ -19,7 +19,7 @@ stages{
         stage('Code Check Out'){
 		  agent {label 'Master'}  
 		when {
-                expression { !skipRemainingStages }
+                expression { skipRemainingStages }
                      }
             steps {
 		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
@@ -47,7 +47,7 @@ stages{
 	stage('Build'){
 		  agent {label 'Dev'}  
 		when {
-                expression { !skipRemainingStages }
+                expression { skipRemainingStages }
                      }
             steps {
 		bat label: '', script: 'mvn1 clean package'
@@ -90,7 +90,7 @@ stages{
 
         stage ('Deployments'){
 		when {
-                expression { !skipRemainingStages }
+                expression { skipRemainingStages }
                      }
             parallel{
                 stage ('Deploy to Development'){
@@ -117,7 +117,11 @@ stages{
                            echo 'Code deployed to Production.'
                          }
                      failure {
-                              echo ' Deployment failed.'
+                              script{
+                    		 skipRemainingStages = false
+                     			//or
+                    		println "skipRemainingStages = ${skipRemainingStages}"
+                    		}
                               
                               }
                         } //post
