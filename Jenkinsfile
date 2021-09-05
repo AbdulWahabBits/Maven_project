@@ -1,4 +1,7 @@
 def runRemainingStages = true
+def branch_type = get_branch_type "${env.BRANCH_NAME}"
+def branch_deployment_environment = get_branch_deployment_environment branch_type
+
 pipeline {
    
    agent none
@@ -24,6 +27,7 @@ stages{
             steps {
 		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
                 stash 'source'    
+		    println "Deploying to ${branch_deployment_environment}"
             }
             post {
                 success {
