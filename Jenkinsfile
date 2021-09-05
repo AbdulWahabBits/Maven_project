@@ -50,16 +50,18 @@ stages{
                 expression { skipRemainingStages }
                      }
             steps {
-		bat label: '', script: 'mvn1 clean package'
-                echo "Build successful";
+		bat label: '', script: 'mvn clean package'
+               
 		stash 'Build'    
             }
             post {
                 success {
+		     echo "Build successful";
                     echo 'Now Archiving...'
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
 		 stash 'file'
+			skipRemainingStages = false
                 }
 		    failure {
                 script{
