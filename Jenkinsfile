@@ -67,6 +67,7 @@ stages{
                      //or
                     println "skipRemainingStages = ${skipRemainingStages}"
                     }
+		    }
             }
         } 
 		
@@ -117,11 +118,7 @@ stages{
                          }
                      failure {
                               echo ' Deployment failed.'
-                              script{
-                     		skipRemainingStages = false
-                     		//or
-                    		println "skipRemainingStages = ${skipRemainingStages}"
-                   		 }
+                              
                               }
                         } //post
                    
@@ -139,5 +136,4 @@ stages{
    
    //end Brackets
     }
-}
 }
