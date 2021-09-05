@@ -59,7 +59,7 @@ stages{
 		    mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
          			  subject: "That build was successful.",
-          			   body: "That build was successful :(")
+          			   body: "That build was successful :)")
                     echo 'Now Archiving...'
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
@@ -107,7 +107,26 @@ stages{
 			    unstash 'file'
 			bat label: '', script: 'mvn clean package'
                         bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
-                    }
+                         }
+			post {
+                      success {
+                           echo 'Code deployed to Development.'
+			      mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "Deployed to Development",
+          			   body: "You can now test the web application :)")
+                         }
+                     failure {
+                              script{
+                    		 runRemainingStages = false
+                     		 println "runRemainingStages = ${runRemainingStages}"
+                    		}
+			     mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "Deployment to Development Failed",
+          			   body: "Please check your Development stage in pipeline:)")
+                              }
+                        } //post
                 } 
 
                
@@ -123,12 +142,20 @@ stages{
                     post {
                       success {
                            echo 'Code deployed to Production.'
+			      mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "Deployed to Production",
+          			   body: "You can now test the web application :)")
                          }
                      failure {
                               script{
                     		 runRemainingStages = false
                      		 println "runRemainingStages = ${runRemainingStages}"
                     		}
+			     mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "Deployment to Production Failed",
+          			   body: "Please check your Production stage in pipeline:)")
                               }
                         } //post
                    
