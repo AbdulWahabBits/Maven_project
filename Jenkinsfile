@@ -67,7 +67,10 @@ stages{
                      runRemainingStages = false
                      println "runRemainingStages = ${runRemainingStages}"
 		     }
-			    mail to: 2021ht66017@wilp.bits-pilani.ac.in, subject: 'The Pipeline failed :('
+			       mail(from: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "That build failed.",
+          			   body: "The Pipeline failed :(")
 		    }
             }
         } 
