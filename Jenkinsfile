@@ -22,7 +22,7 @@ stages{
                 expression { !skipRemainingStages }
                      }
             steps {
-		git url: "https://github.com/AbdulWahabBits/Maven_project.git1"
+		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
                 stash 'source'    
             }
             post {
@@ -35,7 +35,7 @@ stages{
                         }
 		failure {
                 script{
-                     skipRemainingStages = true
+                     skipRemainingStages = false
                      //or
                     println "skipRemainingStages = ${skipRemainingStages}"
                     }
@@ -46,8 +46,11 @@ stages{
 	
 	stage('Build'){
 		  agent {label 'Dev'}  
+		when {
+                expression { !skipRemainingStages }
+                     }
             steps {
-		bat label: '', script: 'mvn clean package'
+		bat label: '', script: 'mvn1 clean package'
                 echo "Build successful";
 		stash 'Build'    
             }
@@ -58,6 +61,12 @@ stages{
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
 		 stash 'file'
                 }
+		    failure {
+                script{
+                     skipRemainingStages = false
+                     //or
+                    println "skipRemainingStages = ${skipRemainingStages}"
+                    }
             }
         } 
 		
@@ -79,6 +88,9 @@ stages{
 			 } */
 
         stage ('Deployments'){
+		when {
+                expression { !skipRemainingStages }
+                     }
             parallel{
                 stage ('Deploy to Development'){
 				agent {label 'Dev'}
@@ -105,7 +117,11 @@ stages{
                          }
                      failure {
                               echo ' Deployment failed.'
-                              
+                              script{
+                     		skipRemainingStages = false
+                     		//or
+                    		println "skipRemainingStages = ${skipRemainingStages}"
+                   		 }
                               }
                         } //post
                    
