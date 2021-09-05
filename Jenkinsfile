@@ -61,7 +61,7 @@ stages{
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
 		 stash 'file'
-			skipRemainingStages = false
+			script { skipRemainingStages = false }
                 }
 		    failure {
                 script{
