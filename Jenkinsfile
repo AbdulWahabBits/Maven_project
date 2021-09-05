@@ -19,7 +19,7 @@ stages{
         stage('Code Check Out'){
 		  agent {label 'Master'}  
             steps {
-		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
+		git url: "https://github.com/AbdulWahabBits/Maven_project.git1"
                 stash 'source'    
             }
             post {
@@ -29,7 +29,14 @@ stages{
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
 		 stash 'file'
-                }
+                        }
+		failure {
+                script{
+                     bat "exit 1"
+                     //or
+                     error "Failed, exiting now..."
+                    }
+             }
             }
         }
 	
