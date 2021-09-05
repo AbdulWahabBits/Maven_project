@@ -1,4 +1,4 @@
-
+def skipRemainingStages = false
 pipeline {
    
    agent none
@@ -18,6 +18,9 @@ tools {
 stages{
         stage('Code Check Out'){
 		  agent {label 'Master'}  
+		when {
+                expression { !skipRemainingStages }
+                     }
             steps {
 		git url: "https://github.com/AbdulWahabBits/Maven_project.git1"
                 stash 'source'    
@@ -32,9 +35,10 @@ stages{
                         }
 		failure {
                 script{
-                     bat "exit 1"
+                     skipRemainingStages = true
                      //or
                      error "Failed, exiting now..."
+			println "skipRemainingStages = ${skipRemainingStages}"
                     }
              }
             }
