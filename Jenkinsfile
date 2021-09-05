@@ -1,4 +1,4 @@
-def skipRemainingStages = false
+def skipRemainingStages = true
 pipeline {
    
    agent none
