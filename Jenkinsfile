@@ -16,13 +16,30 @@ tools {
    
 
 stages{
-        stage('Build'){
+        stage('Code Check Out'){
 		  agent {label 'Master'}  
             steps {
-		    
-                bat label: '', script: 'mvn clean package'
+		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
+                stash 'source'    
+            }
+            post {
+                success {
+		    echo "Code Checkout successful";
+                    echo 'Now Archiving...'
+                    //archiveArtifacts artifacts: '**/target/*.war'
+                    archiveArtifacts artifacts: 'webapp/target\\*.war'
+		 stash 'file'
+                }
+            }
+        }
+	
+	
+	stage('Build'){
+		  agent {label 'Dev'}  
+            steps {
+		bat label: '', script: 'mvn clean package'
                 echo "Build successful";
-		stash 'source'    
+		stash 'Build'    
             }
             post {
                 success {
@@ -32,9 +49,9 @@ stages{
 		 stash 'file'
                 }
             }
-        }
+        } 
 		
-		stage('Test') {
+		/*stage('Test') {
 		     agent {label 'Dev'}
 		     steps {
 			     unstash 'source'
@@ -49,7 +66,7 @@ stages{
 			 echo 'test failed...'
 			 }
 			 }
-			 }
+			 } */
 
         stage ('Deployments'){
             parallel{
