@@ -49,7 +49,7 @@ stages{
                 expression { runRemainingStages }
                      }
             steps {
-		bat label: '', script: 'mvn clean package'
+		bat label: '', script: 'mvn1 clean package'
                
 		stash 'Build'    
             }
