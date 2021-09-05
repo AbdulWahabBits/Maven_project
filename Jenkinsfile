@@ -1,4 +1,4 @@
-def skipRemainingStages = true
+def runRemainingStages = true
 pipeline {
    
    agent none
@@ -19,7 +19,7 @@ stages{
         stage('Code Check Out'){
 		  agent {label 'Master'}  
 		when {
-                expression { skipRemainingStages }
+                expression { runRemainingStages }
                      }
             steps {
 		git url: "https://github.com/AbdulWahabBits/Maven_project.git"
@@ -35,9 +35,8 @@ stages{
                         }
 		failure {
                 script{
-                     skipRemainingStages = false
-                     //or
-                    println "skipRemainingStages = ${skipRemainingStages}"
+                     runRemainingStages = false
+                     println "runRemainingStages = ${runRemainingStages}"
                     }
              }
             }
@@ -47,10 +46,10 @@ stages{
 	stage('Build'){
 		  agent {label 'Dev'}  
 		when {
-                expression { skipRemainingStages }
+                expression { runRemainingStages }
                      }
             steps {
-		bat label: '', script: 'mvn clean package'
+		bat label: '', script: 'mvn1 clean package'
                
 		stash 'Build'    
             }
@@ -61,13 +60,13 @@ stages{
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
 		 stash 'file'
-			script { skipRemainingStages = false }
+			
                 }
 		    failure {
                 script{
-                     skipRemainingStages = false
-                     //or
-                    println "skipRemainingStages = ${skipRemainingStages}"
+                     runRemainingStages = false
+                     println "runRemainingStages = ${runRemainingStages}"
+		     mail to: 2021ht66017@wilp.bits-pilani.ac.in, subject: 'The Pipeline failed :('
                     }
 		    }
             }
@@ -92,7 +91,7 @@ stages{
 
         stage ('Deployments'){
 		when {
-                expression { skipRemainingStages }
+                expression { runRemainingStages }
                      }
             parallel{
                 stage ('Deploy to Development'){
@@ -120,11 +119,9 @@ stages{
                          }
                      failure {
                               script{
-                    		 skipRemainingStages = false
-                     			//or
-                    		println "skipRemainingStages = ${skipRemainingStages}"
+                    		 runRemainingStages = false
+                     		 println "runRemainingStages = ${runRemainingStages}"
                     		}
-                              
                               }
                         } //post
                    
