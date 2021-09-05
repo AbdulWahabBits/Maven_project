@@ -106,7 +106,7 @@ stages{
                     steps {
 			    unstash 'file'
 			bat label: '', script: 'mvn clean package'
-                        bat "copy1 webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
+                        bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                          }
 			post {
                       success {
@@ -136,7 +136,7 @@ stages{
                        timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
                         //sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
 		      unstash 'file'
-                       bat "copy1 webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
+                       bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
                     }
                    }
                     post {
@@ -163,14 +163,6 @@ stages{
               
             }
         }
-  /*stage ('Start Tomcat Server') {
-         sleep(time:5,unit:"SECONDS") 
-         bat "${tomcatBin}\\startup.bat"
-         sleep(time:100,unit:"SECONDS")
-   }*/
-   
-   
-   
-   //end Brackets
+ 
     }
 }
