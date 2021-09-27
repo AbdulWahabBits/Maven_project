@@ -47,7 +47,7 @@ stages{
 	
 	
 	stage('Build'){
-		  agent {label 'Dev'}  
+		  agent {label 'Master'}  
 		when {
                 expression { runRemainingStages }
                      }
@@ -82,22 +82,35 @@ stages{
             }
         } 
 		
-		/*stage('Test') {
-		     agent {label 'Dev'}
-		     steps {
-			     unstash 'source'
-			    bat label: '', script: 'mvn test'
-                            echo "test successful";
-			 }
-			 post {
-			 success{
-			  echo 'Now will deploy...'
-			 }
-			 failure{
-			 echo 'test failed...'
-			 }
-			 }
-			 } */
+	stage('Test'){
+		  agent {label 'Master'}  
+		when {
+                expression { runRemainingStages }
+                     }
+            steps {
+		bat label: '', script: 'mvn test'
+                   }
+            post {
+                success {
+		     echo "Test successful";
+		    mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "That test was successful.",
+          			   body: "That test was successful :)")
+                    
+                }
+		    failure {
+                script{
+                     runRemainingStages = false
+                     println "runRemainingStages = ${runRemainingStages}"
+		     }
+			       mail(from: "awahabjenkins@gmail.com", 
+         			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
+         			  subject: "That Test failed.",
+          			   body: "The Pipeline failed :(")
+		    }
+            }
+        }
 
         stage ('Deployments'){
 		when {
