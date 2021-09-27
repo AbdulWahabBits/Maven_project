@@ -139,7 +139,8 @@ stages{
                        timeout(time:5, unit:'DAYS'){input message:'Approve PRODUCTION Deployment?'
                         //sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
 		      unstash 'file'
-                       bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\*.war\""
+                       bat "copy webapp\\target\\*.war \"C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0_Tomcat-2\\webapps\\*.war\""
+						 
                     }
                    }
                     post {
