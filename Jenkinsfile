@@ -57,7 +57,7 @@ stages{
 		    mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
          			  subject: "That build was successful.",
-          			   body: "That branch build was successful :)")
+          			   body: "That Bug Fixing branch build was successful :)")
                     echo 'Now Archiving...'
                     //archiveArtifacts artifacts: '**/target/*.war'
                     archiveArtifacts artifacts: 'webapp/target\\*.war'
@@ -71,8 +71,8 @@ stages{
 		     }
 			       mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
-         			  subject: "That branch build failed.",
-          			   body: "The Branch Pipeline failed :(")
+         			  subject: "That Bug Fixing branch build failed.",
+          			   body: "The Bug Fixing branch Pipeline failed :(")
 		    }
             }
         } 
@@ -90,8 +90,8 @@ stages{
 		     echo "Test successful";
 		    mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
-         			  subject: "That test in branch was successful.",
-          			   body: "That test in branch was successful :)")
+         			  subject: "That test in Bug Fixing branch was successful.",
+          			   body: "That test in Bug Fixing branchwas successful :)")
                     
                 }
 		    failure {
@@ -101,8 +101,8 @@ stages{
 		     }
 			       mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
-         			  subject: "That Test in branch failed.",
-          			   body: "The Branch Pipeline failed :(")
+         			  subject: "That Test in Bug Fixing branch failed.",
+          			   body: "The Bug Fixing branch Pipeline failed :(")
 		    }
             }
         }
@@ -124,8 +124,8 @@ stages{
                            echo 'Code deployed to Development.'
 			      mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
-         			  subject: "Deployed to Development BraNCH",
-          			   body: "You can now test the web application :)")
+         			  subject: "Deployed to Bug Fixing branch",
+          			   body: "You can now test the bug fixed web application :)")
                          }
                      failure {
                               script{
@@ -134,8 +134,8 @@ stages{
                     		}
 			     mail(from: "awahabjenkins@gmail.com", 
          			  to: "2021ht66017@wilp.bits-pilani.ac.in", 
-         			  subject: "Deployment to Development Branch Failed",
-          			   body: "Please check your Development branch stage in pipeline:)")
+         			  subject: "Deployment to Bug Fixing branch Failed",
+          			   body: "Please check your Bug Fixing branch branch stage in pipeline:)")
                               }
                         } //post
                 } 
